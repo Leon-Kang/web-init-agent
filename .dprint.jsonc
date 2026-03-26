@@ -5,7 +5,7 @@
   "plugins": [
     "https://plugins.dprint.dev/json-0.19.3.wasm",
     "https://plugins.dprint.dev/g-plane/malva-v0.5.1.wasm",
-    "https://plugins.dprint.dev/typescript-0.91.6.wasm"
+    "https://plugins.dprint.dev/typescript-0.91.6.wasm",
   ],
   "excludes": [
     "**/node_modules",
@@ -19,13 +19,13 @@
     "tmp/",
     "dist/",
     "build/",
-    "out/"
+    "out/",
   ],
   "includes": [
     "**/*.{json,jsonc}",
     "**/*.css",
     "**/*.{js,jsx,mjs,cjs}",
-    "**/*.{ts,tsx,mts,cts}"
+    "**/*.{ts,tsx,mts,cts}",
   ],
   // https://dprint.dev/plugins/json/config/
   "json": {
@@ -36,7 +36,7 @@
     "preferSingleLine": false,
     "commentLine.forceSpaceAfterSlashes": true,
     "ignoreNodeCommentText": "dprint-ignore",
-    "trailingCommas": "jsonc"
+    "trailingCommas": "jsonc",
   },
   // https://dprint.dev/plugins/malva/config/
   "malva": {
@@ -56,7 +56,7 @@
     "operatorLinebreak": "before",
     "padComments": true,
     "singleLineBlockThreshold": null,
-    "trailingComma": false
+    "trailingComma": false,
   },
   // https://dprint.dev/plugins/typescript/config/
   "typescript": {
@@ -102,6 +102,6 @@
     "typeParameters.preferSingleLine": true,
     "unionAndIntersectionType.preferSingleLine": true,
 
-    "locked": true
+    "locked": true,
   }
 }

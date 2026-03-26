@@ -1,9 +1,7 @@
 /** @type {import("stylelint").Config} */
 export default {
     'extends': ['stylelint-config-standard'],
-    'plugins': [
-        'stylelint-declaration-block-no-ignored-properties',
-    ],
+    'plugins': ['stylelint-declaration-block-no-ignored-properties'],
     'overrides': [{
         'files': ['**/*.module.css'],
         'rules': {

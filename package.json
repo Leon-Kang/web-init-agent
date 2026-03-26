@@ -10,7 +10,7 @@
     "lint:fix": "biome lint --write .",
     "typecheck": "tsc --noEmit",
     "check": "dprint check && biome lint . && stylelint \"**/*.css\" && tsc --noEmit",
-    "test": "vitest run",
+    "test": "vitest run --passWithNoTests",
     "test:watch": "vitest",
     "prepare": "husky"
   },

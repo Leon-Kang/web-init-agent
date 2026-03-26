@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    "biomejs.biome",
+    "dprint.dprint",
+    "stylelint.vscode-stylelint",
+    "editorconfig.editorconfig"
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "incremental": true,
+  // UPDATE PLUGIN VERSIONS on first use: https://plugins.dprint.dev/
+  // Run `dprint config update` to auto-update to latest plugin versions
+  "plugins": [
+    "https://plugins.dprint.dev/json-0.19.3.wasm",
+    "https://plugins.dprint.dev/g-plane/malva-v0.5.1.wasm",
+    "https://plugins.dprint.dev/typescript-0.91.6.wasm"
+  ],
+  "excludes": [
+    "**/node_modules",
+    "**/*-lock.json",
+    ".next/",
+    ".astro/",
+    ".nuxt/",
+    ".svelte-kit/",
+    ".vercel/",
+    ".output/",
+    "tmp/",
+    "dist/",
+    "build/",
+    "out/"
+  ],
+  "includes": [
+    "**/*.{json,jsonc}",
+    "**/*.css",
+    "**/*.{js,jsx,mjs,cjs}",
+    "**/*.{ts,tsx,mts,cts}"
+  ],
+  // https://dprint.dev/plugins/json/config/
+  "json": {
+    "newLineKind": "lf",
+    "indentWidth": 2,
+    "lineWidth": 80,
+    "useTabs": false,
+    "preferSingleLine": false,
+    "commentLine.forceSpaceAfterSlashes": true,
+    "ignoreNodeCommentText": "dprint-ignore",
+    "trailingCommas": "jsonc"
+  },
+  // https://dprint.dev/plugins/malva/config/
+  "malva": {
+    "printWidth": 80,
+    "indentWidth": 2,
+    "useTabs": false,
+    "quotes": "preferDouble",
+    "blockSelectorLinebreak": "consistent",
+    "declarationOrder": "smacss",
+    "hexCase": "lower",
+    "hexColorLength": "short",
+    "ignoreCommentDirective": "dprint-ignore",
+    "keyframeSelectorNotation": null,
+    "lineBreak": "lf",
+    "linebreakInPseudoParens": true,
+    "omitNumberLeadingZero": false,
+    "operatorLinebreak": "before",
+    "padComments": true,
+    "singleLineBlockThreshold": null,
+    "trailingComma": false
+  },
+  // https://dprint.dev/plugins/typescript/config/
+  "typescript": {
+    "lineWidth": 100,
+    "indentWidth": 4,
+    "useTabs": false,
+    "newLineKind": "lf",
+    "quoteStyle": "preferSingle",
+    "semiColons": "prefer",
+    "trailingCommas": "onlyMultiLine",
+    "useBraces": "whenNotSingleLine",
+    "bracePosition": "sameLineUnlessHanging",
+    "singleBodyPosition": "sameLine",
+    "operatorPosition": "nextLine",
+    "arrowFunction.useParentheses": "force",
+
+    "conditionalExpression.preferSingleLine": true,
+    "conditionalType.preferSingleLine": true,
+
+    "module.sortImportDeclarations": "maintain",
+    "module.sortExportDeclarations": "maintain",
+    "importDeclaration.sortNamedImports": "maintain",
+    "exportDeclaration.sortNamedExports": "maintain",
+
+    "preferHanging": false,
+    "preferSingleLine": false,
+    "arguments.preferSingleLine": true,
+    "parameters.preferSingleLine": true,
+    "arrayExpression.preferSingleLine": true,
+    "binaryExpression.preferSingleLine": true,
+
+    "jsx.bracketPosition": "nextLine",
+    "jsx.forceNewLinesSurroundingContent": true,
+    "jsx.multiLineParens": "always",
+    "jsx.quoteStyle": "preferDouble",
+    "jsxExpressionContainer.spaceSurroundingExpression": false,
+    "jsxSelfClosingElement.spaceBeforeSlash": true,
+
+    "enumDeclaration.memberSpacing": "newLine",
+    "typeParameters.preferHanging": "always",
+    "unionAndIntersectionType.preferHanging": true,
+    "tupleType.preferSingleLine": true,
+    "typeParameters.preferSingleLine": true,
+    "unionAndIntersectionType.preferSingleLine": true,
+
+    "locked": true
+  }
+}

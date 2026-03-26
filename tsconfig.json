@@ -1,0 +1,12 @@
+{
+  // Framework-specific tsconfig. Extend and override as needed.
+  // See AGENTS.md § "Framework-Specific Overrides" for guidance.
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    // Next.js:  add "jsx": "preserve" and extend with "next/core-web-vitals"
+    // Astro:    extend with "astro/tsconfigs/strict"
+    // Remix:    add framework types to "types" array
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist", "build", "out"]
+}

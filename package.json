@@ -1,0 +1,55 @@
+{
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@latest",
+  "scripts": {
+    "fmt": "dprint fmt",
+    "fmt:check": "dprint check",
+    "lint": "biome lint .",
+    "lint:css": "stylelint \"**/*.css\"",
+    "lint:fix": "biome lint --write .",
+    "typecheck": "tsc --noEmit",
+    "check": "dprint check && biome lint . && stylelint \"**/*.css\" && tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepare": "husky"
+  },
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "latest",
+    "@testing-library/jest-dom": "latest",
+    "@testing-library/react": "latest",
+    "@testing-library/user-event": "latest",
+    "jsdom": "latest",
+    "autoprefixer": "latest",
+    "dprint": "latest",
+    "husky": "latest",
+    "lint-staged": "latest",
+    "postcss": "latest",
+    "postcss-preset-env": "latest",
+    "stylelint": "latest",
+    "stylelint-config-standard": "latest",
+    "stylelint-declaration-block-no-ignored-properties": "latest",
+    "typescript": "latest",
+    "vitest": "latest"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,mjs,mts,cjs,cts}": [
+      "biome lint --write",
+      "dprint fmt"
+    ],
+    "*.{json,jsonc}": [
+      "dprint fmt"
+    ],
+    "*.css": [
+      "stylelint --fix",
+      "dprint fmt"
+    ]
+  },
+  "browserslist": [
+    "defaults and fully supports es6-module"
+  ]
+}

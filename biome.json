@@ -9,7 +9,7 @@
   "javascript": {
     "jsxRuntime": "transparent"
   },
-  "organizeImports": {
+  "assist": {
     "enabled": false
   },
   "formatter": {
@@ -20,7 +20,7 @@
     "rules": {
       "recommended": true,
       "a11y": {
-        "all": false
+        "recommended": false
       },
       "complexity": {
         "noBannedTypes": "off",
@@ -43,7 +43,6 @@
         "noDangerouslySetInnerHtml": "warn"
       },
       "style": {
-        "noArguments": "off",
         "noInferrableTypes": "off",
         "noParameterAssign": "off",
         "noNonNullAssertion": "warn",

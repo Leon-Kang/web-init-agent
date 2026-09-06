@@ -1,2 +1,7 @@
 allowBuilds:
   dprint: true
+
+overrides:
+  nanoid: 3.3.18
+  postcss: 8.5.28
+  vite: 8.0.16

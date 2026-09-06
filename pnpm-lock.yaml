@@ -9,52 +9,52 @@ importers:
   .:
     devDependencies:
       '@biomejs/biome':
-        specifier: latest
+        specifier: 2.4.9
         version: 2.4.9
       '@testing-library/jest-dom':
-        specifier: latest
+        specifier: 6.9.1
         version: 6.9.1
       '@testing-library/react':
-        specifier: latest
+        specifier: 16.3.2
         version: 16.3.2(@testing-library/dom@10.4.1)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@testing-library/user-event':
-        specifier: latest
+        specifier: 14.6.1
         version: 14.6.1(@testing-library/dom@10.4.1)
       autoprefixer:
-        specifier: latest
+        specifier: 10.4.27
         version: 10.4.27(postcss@8.5.8)
       dprint:
-        specifier: latest
+        specifier: 0.53.0
         version: 0.53.0
       husky:
-        specifier: latest
+        specifier: 9.1.7
         version: 9.1.7
       jsdom:
-        specifier: latest
+        specifier: 29.0.1
         version: 29.0.1
       lint-staged:
-        specifier: latest
+        specifier: 16.4.0
         version: 16.4.0
       postcss:
-        specifier: latest
+        specifier: 8.5.8
         version: 8.5.8
       postcss-preset-env:
-        specifier: latest
+        specifier: 11.2.0
         version: 11.2.0(postcss@8.5.8)
       stylelint:
-        specifier: latest
-        version: 17.5.0(typescript@6.0.2)
+        specifier: 17.5.0
+        version: 17.5.0(supports-color@10.2.2)(typescript@6.0.2)
       stylelint-config-standard:
-        specifier: latest
-        version: 40.0.0(stylelint@17.5.0(typescript@6.0.2))
+        specifier: 40.0.0
+        version: 40.0.0(stylelint@17.5.0(supports-color@10.2.2)(typescript@6.0.2))
       stylelint-declaration-block-no-ignored-properties:
-        specifier: latest
-        version: 3.0.0(stylelint@17.5.0(typescript@6.0.2))
+        specifier: 3.0.0
+        version: 3.0.0(stylelint@17.5.0(supports-color@10.2.2)(typescript@6.0.2))
       typescript:
-        specifier: latest
+        specifier: 6.0.2
         version: 6.0.2
       vitest:
-        specifier: latest
+        specifier: 4.1.1
         version: 4.1.1(jsdom@29.0.1)(vite@8.0.2(yaml@2.8.3))
 
 packages:
@@ -2647,9 +2647,11 @@ snapshots:
     transitivePeerDependencies:
       - '@noble/hashes'
 
-  debug@4.4.3:
+  debug@4.4.3(supports-color@10.2.2):
     dependencies:
       ms: 2.1.3
+    optionalDependencies:
+      supports-color: 10.2.2
 
   decimal.js@10.6.0: {}
 
@@ -3385,20 +3387,20 @@ snapshots:
     dependencies:
       min-indent: 1.0.1
 
-  stylelint-config-recommended@18.0.0(stylelint@17.5.0(typescript@6.0.2)):
+  stylelint-config-recommended@18.0.0(stylelint@17.5.0(supports-color@10.2.2)(typescript@6.0.2)):
     dependencies:
-      stylelint: 17.5.0(typescript@6.0.2)
+      stylelint: 17.5.0(supports-color@10.2.2)(typescript@6.0.2)
 
-  stylelint-config-standard@40.0.0(stylelint@17.5.0(typescript@6.0.2)):
+  stylelint-config-standard@40.0.0(stylelint@17.5.0(supports-color@10.2.2)(typescript@6.0.2)):
     dependencies:
-      stylelint: 17.5.0(typescript@6.0.2)
-      stylelint-config-recommended: 18.0.0(stylelint@17.5.0(typescript@6.0.2))
+      stylelint: 17.5.0(supports-color@10.2.2)(typescript@6.0.2)
+      stylelint-config-recommended: 18.0.0(stylelint@17.5.0(supports-color@10.2.2)(typescript@6.0.2))
 
-  stylelint-declaration-block-no-ignored-properties@3.0.0(stylelint@17.5.0(typescript@6.0.2)):
+  stylelint-declaration-block-no-ignored-properties@3.0.0(stylelint@17.5.0(supports-color@10.2.2)(typescript@6.0.2)):
     dependencies:
-      stylelint: 17.5.0(typescript@6.0.2)
+      stylelint: 17.5.0(supports-color@10.2.2)(typescript@6.0.2)
 
-  stylelint@17.5.0(typescript@6.0.2):
+  stylelint@17.5.0(supports-color@10.2.2)(typescript@6.0.2):
     dependencies:
       '@csstools/css-calc': 3.1.1(@csstools/css-parser-algorithms@4.0.0(@csstools/css-tokenizer@4.0.0))(@csstools/css-tokenizer@4.0.0)
       '@csstools/css-parser-algorithms': 4.0.0(@csstools/css-tokenizer@4.0.0)
@@ -3411,7 +3413,7 @@ snapshots:
       cosmiconfig: 9.0.1(typescript@6.0.2)
       css-functions-list: 3.3.3
       css-tree: 3.2.1
-      debug: 4.4.3
+      debug: 4.4.3(supports-color@10.2.2)
       fast-glob: 3.3.3
       fastest-levenshtein: 1.0.16
       file-entry-cache: 11.1.2

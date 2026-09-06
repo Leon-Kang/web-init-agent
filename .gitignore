@@ -25,6 +25,7 @@ tmp/
 
 # Editor
 .idea/
+.claude/settings.local.json
 *.swp
 *.swo
 *~

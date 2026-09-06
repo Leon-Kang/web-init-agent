@@ -1,7 +1,8 @@
-# Web Project Template
+# Web Init Agent
 
-A framework-agnostic TypeScript web project template with a modern, opinionated toolchain.
-Designed for AI-assisted development — see `AGENTS.md` for the full rule set.
+A framework-agnostic TypeScript foundation for projects built by humans and AI coding agents.
+It turns project initialization into an explicit, repeatable engineering contract. See `AGENTS.md`
+for the full rule set.
 
 框架无关的 TypeScript Web 项目模板，配备现代化工具链。
 专为 AI 辅助开发设计，完整规则见 `AGENTS.md`。
@@ -60,23 +61,17 @@ pnpm add -D @types/react @types/react-dom vite @vitejs/plugin-react
 pnpm add astro
 ```
 
-### Step 2 · 固定依赖版本
+### Step 2 · 安装固定版本依赖
 
-Template versions are `"latest"` placeholders — resolve them immediately.
-模板中的版本号均为 `"latest"` 占位符，需立即解析为精确版本。
+Dependencies and the pnpm runtime are pinned for reproducible installs.
+依赖与 pnpm 运行时均已固定版本，保证安装结果可复现。
 
 ```bash
-pnpm install    # resolve "latest" in pnpm-lock.yaml / 将 latest 解析写入 lockfile
-pnpm up         # rewrite package.json with exact versions / 将精确版本回写到 package.json
-pnpm -v         # check pnpm version / 查看 pnpm 版本
+pnpm install    # install the pinned toolchain / 安装固定版本工具链
 ```
 
-Update `package.json`:
-更新 `package.json`：
-
-```json
-"packageManager": "pnpm@<version from pnpm -v>"
-```
+Renovate keeps dependency updates visible and reviewable after the repository is created.
+创建项目后，Renovate 会以可见、可审查的方式维护依赖更新。
 
 ### Step 3 · 配置 TypeScript
 
@@ -169,6 +164,14 @@ If `check` fails after framework install, fix the errors — do not suppress lin
 
 ---
 
+## From initialization to a reviewed PR
+
+This repository establishes the project baseline. After initialization,
+[issue-to-pr](https://github.com/Leon-Kang/issue-to-pr) can take work from an issue through
+implementation, tests, review, and a human-gated pull request.
+
+---
+
 ## Scripts / 脚本
 
 ```bash
@@ -244,3 +247,7 @@ fix(cart): prevent duplicate items
 | `renovate.json` | Automated dependency updates / 依赖自动更新 |
 | `.github/workflows/ci.yml` | CI: check + test / CI 流水线 |
 | `.vscode/` | VS Code settings + recommended extensions / 编辑器配置 |
+
+## License
+
+Released under the [MIT License](LICENSE).

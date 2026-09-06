@@ -47,21 +47,15 @@ pnpm add astro
 
 > This template has no runtime dependencies by design. Add your framework here.
 
-### Step 2 — Pin package versions
+### Step 2 — Install pinned package versions
 
-The template uses `"latest"` as placeholders. Resolve them to exact versions:
-
-```bash
-pnpm install          # resolves "latest" → actual versions in pnpm-lock.yaml
-pnpm up               # rewrites package.json with exact resolved versions
-```
-
-Then update the `packageManager` field in `package.json`:
+The template pins its toolchain and package-manager versions for reproducible installs:
 
 ```bash
-pnpm -v               # e.g. 9.1.4
-# set "packageManager": "pnpm@9.1.4" in package.json
+pnpm install
 ```
+
+Use Renovate pull requests to review dependency updates after creating a project.
 
 ### Step 3 — Configure TypeScript for your framework
 
@@ -434,21 +428,8 @@ The exported name must match the filename:
 
 ### Initial Setup
 
-The `package.json` template uses `"latest"` as placeholder versions. On first use:
-
-```bash
-# Resolve all "latest" to actual current versions
-pnpm install
-# pnpm resolves "latest" and .npmrc save-exact pins them in pnpm-lock.yaml
-
-# Then fix package.json to exact versions (remove "latest" placeholders)
-pnpm up
-# This rewrites package.json with the resolved exact versions
-
-# Remove the NOTE field from devDependencies
-# Update packageManager field to your actual pnpm version:
-pnpm -v   # check version, then set "packageManager": "pnpm@<version>"
-```
+Run `pnpm install` to install the pinned toolchain and configure the Git hooks. Keep dependency
+updates exact and review them through Renovate or explicit `pnpm up --latest` changes.
 
 ### Adding Dependencies
 

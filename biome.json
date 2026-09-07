@@ -20,7 +20,7 @@
     "rules": {
       "preset": "recommended",
       "a11y": {
-        "preset": "none"
+        "preset": "recommended"
       },
       "complexity": {
         "noBannedTypes": "off",

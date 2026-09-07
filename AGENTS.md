@@ -21,9 +21,23 @@ pnpm run fmt          # format all files
 pnpm run lint         # lint JS/TS
 pnpm run lint:css     # lint CSS
 pnpm run typecheck    # type check
+pnpm run build        # compile the minimal example
 pnpm run test         # run tests once
 pnpm run test:watch   # run tests in watch mode
+pnpm run verify       # check + build + test
 ```
+
+## AI Operational Safety
+
+- Inspect the repository and read relevant files before editing; never overwrite unseen files.
+- Treat existing uncommitted changes as user-owned and keep unrelated files untouched.
+- Do not commit, push, merge, deploy, publish packages, or change production infrastructure without explicit authorization.
+- Do not run destructive Git, database, filesystem, or cloud operations without resolving exact targets and obtaining explicit authorization.
+- Database and persistent-data changes require a rollback plan, backups where applicable, and migration tests.
+- Never weaken tests, lint rules, branch protection, or security checks merely to make validation pass.
+- After changes, run `pnpm run verify`; report any skipped or environment-blocked validation plainly.
+- Keep `examples/minimal/` buildable and tested until a framework project replaces it with equivalent coverage.
+- Keep secrets out of prompts, logs, fixtures, screenshots, telemetry, and committed environment files.
 
 ## New Project Checklist
 
@@ -65,7 +79,7 @@ Edit `tsconfig.json` and fill in the framework-specific overrides:
 |---|---|---|
 | Next.js | `"jsx": "preserve"` | Add `"next/core-web-vitals"` to extends array |
 | Astro | keep `"jsx": "react-jsx"` for React islands | `"astro/tsconfigs/strict"` |
-| Vite + React | base config works as-is | — |
+| Vite + React | add `"jsx": "react-jsx"` | — |
 | Remix | `"moduleResolution": "bundler"` | add Remix types to `"types"` array |
 
 Update `"include"` to match your framework's source layout:
@@ -90,17 +104,21 @@ pnpm dlx dprint config update   # rewrites plugin URLs to latest versions
 
 **5a.** If the project targets a browser (React, Next.js, Astro with React):
 
-`vitest.config.ts` is already set to `environment: "jsdom"` — no change needed.
+Install the framework's browser test dependencies and change `vitest.config.ts` to `jsdom`.
 
 **5b.** If the project is server-only (Node.js, API routes only):
 
-Change `environment` in `vitest.config.ts`:
+The starter defaults to the dependency-free Node.js environment:
 
 ```ts
 environment: "node",
 ```
 
-**5c.** Enable the test setup file and create it:
+**5c.** For React browser tests, install the required packages, enable the setup file, and create it:
+
+```bash
+pnpm add -D jsdom @testing-library/jest-dom @testing-library/react @testing-library/user-event
+```
 
 In `vitest.config.ts`, uncomment:
 
@@ -135,7 +153,8 @@ Add any new required variables to `.env.example` (no secrets — just keys with 
 
 ```bash
 pnpm run check    # must pass with zero errors
-pnpm run test     # must pass (or "no test files found" on a fresh project)
+pnpm run build    # must compile production source
+pnpm run test     # must run at least one real test
 ```
 
 If `pnpm run check` fails after framework install, the framework may have added files
@@ -248,7 +267,6 @@ Enable strict mode. See `tsconfig.base.json` for the full base configuration.
     "moduleResolution": "bundler",
     "module": "esnext",
     "target": "esnext",
-    "jsx": "react-jsx",                     // new JSX transform (React 17+)
     "lib": ["ESNext", "DOM", "DOM.Iterable"]
   }
 }
@@ -268,7 +286,7 @@ Frameworks may need to extend or override this base config:
 |---|---|
 | Next.js | Extend with `next/core-web-vitals` tsconfig, set `jsx: "preserve"` |
 | Astro | Use `astro/tsconfigs/strict`, set `jsx: "react-jsx"` for React islands |
-| Vite (React) | Base config works as-is |
+| Vite (React) | Set `jsx` to `react-jsx` |
 | Remix | Set `moduleResolution: "bundler"`, extend with Remix types |
 
 ## Linting Rules (Biome)
@@ -279,7 +297,7 @@ Biome handles JS/TS linting. The formatter is **disabled** (dprint handles forma
 
 - **Recommended rules**: Enabled
 - **JSX runtime**: `transparent` (auto-detects classic vs automatic transform)
-- **Accessibility (a11y)**: Disabled by default (enable per-project as needed)
+- **Accessibility (a11y)**: Recommended rules enabled by default
 
 ### Enforced Rules
 
@@ -418,12 +436,12 @@ The exported name must match the filename:
 - **pnpm** is the required package manager (pinned via `packageManager` field in `package.json`)
 - ALWAYS use `pnpm`. NEVER use `npm`, `yarn`, or any other package manager.
 - ALWAYS use `pnpm run <script>`. NEVER use `npm run <script>`.
-- pnpm enforces strict dependency resolution — no phantom dependencies
+- pnpm enforces strict peer dependency resolution — no phantom dependencies
 
 ### Version Pinning
 
 - **Always use exact versions** in `package.json` (no `^` or `~` prefixes)
-- Enforced via `.npmrc` with `save-exact=true`
+- Enforced via `pnpm-workspace.yaml` with `saveExact: true`
 - This ensures deterministic installs across environments
 
 ### Initial Setup
@@ -434,7 +452,7 @@ updates exact and review them through Renovate or explicit `pnpm up --latest` ch
 ### Adding Dependencies
 
 ```bash
-# Add a runtime dependency (exact version pinned via .npmrc)
+# Add a runtime dependency (exact version pinned by project settings)
 pnpm add <package>
 
 # Add a dev dependency
@@ -444,12 +462,14 @@ pnpm add -D <package>
 pnpm remove <package>
 ```
 
-### pnpm-specific Config (`.npmrc`)
+### pnpm-specific Config (`pnpm-workspace.yaml`)
 
-```ini
-auto-install-peers=true         # auto-install peer dependencies
-strict-peer-dependencies=false  # warn instead of error on peer mismatches
-save-exact=true                 # always pin exact versions
+```yaml
+autoInstallPeers: false
+strictPeerDependencies: true
+saveExact: true
+minimumReleaseAge: 1440
+trustPolicy: no-downgrade
 ```
 
 ## Testing
@@ -570,18 +590,18 @@ Configured via **husky** + **lint-staged** (see `package.json`):
 ### File Naming
 
 ```
-.env                # default values (committed — no secrets)
+.env                # ignored local values
 .env.local          # local overrides (gitignored)
-.env.development    # development mode (committed)
-.env.production     # production mode (committed)
+.env.development    # ignored development values
+.env.production     # ignored production values
 .env.*.local        # local overrides per mode (gitignored)
 ```
 
 ### Rules
 
 - **NEVER** commit secrets (API keys, tokens, passwords) to `.env` files in git
-- All `.env.local` and `.env.*.local` files are gitignored
-- Use `.env.example` or `.env` (without `.local`) for documenting required variables
+- All `.env` variants are gitignored except `.env.example`
+- Use `.env.example` to document required variables with non-secret examples only
 - Prefix client-exposed variables per framework convention:
   - Next.js: `NEXT_PUBLIC_`
   - Vite / Astro: `VITE_` or `PUBLIC_`
@@ -621,7 +641,7 @@ This template is framework-agnostic. When adopting for a specific framework:
 - Biome can lint `.astro` files with the `--files-ignore-unknown=true` flag
 
 ### Vite + React/Vue/Svelte
-- Base config works as-is
+- React projects must set `jsx` to `react-jsx`; Vue and Svelte use their framework config
 - Vite handles PostCSS natively
 - For Vue/Svelte, add framework-specific Stylelint plugins if needed
 
@@ -635,10 +655,10 @@ This template is framework-agnostic. When adopting for a specific framework:
 |---|---|
 | `AGENTS.md` | AI agent rules (this file) |
 | `package.json` | Dependencies, scripts, lint-staged, browserslist, engines, packageManager |
-| `.npmrc` | pnpm config (exact versions, peer deps) |
+| `pnpm-workspace.yaml` | pnpm security, exact-version, peer dependency, and override policy |
 | `tsconfig.base.json` | TypeScript strict base config (framework-agnostic) |
 | `tsconfig.json` | Project-level tsconfig — extends base, add framework overrides here |
-| `vitest.config.ts` | Vitest config (jsdom env, globals, setup file) |
+| `vitest.config.ts` | Framework-neutral Vitest Node environment |
 | `biome.json` | Biome linter config (formatter disabled) |
 | `.dprint.jsonc` | dprint formatter config (JS/TS/JSON/CSS) |
 | `.stylelintrc.js` | Stylelint CSS linter config |
@@ -646,8 +666,11 @@ This template is framework-agnostic. When adopting for a specific framework:
 | `.editorconfig` | Editor indent/encoding defaults |
 | `.gitignore` | Git ignore patterns |
 | `.env.example` | Documents required env vars — copy to `.env.local` |
-| `renovate.json` | Automated dependency updates (devDeps automerge weekly) |
+| `renovate.json` | PR-based non-major devDependency updates; major updates require review |
+| `examples/minimal/` | Real source, build, and tests proving the baseline works |
+| `starter-version.json` | Starter identity and migration schema version |
+| `docs/upgrading.md` | Safe update process for generated projects |
 | `.husky/pre-commit` | Git pre-commit hook (runs lint-staged) |
 | `.vscode/settings.json` | VS Code: dprint formatter on save, Biome lint actions, Stylelint |
 | `.vscode/extensions.json` | Recommended VS Code extensions |
-| `.github/workflows/ci.yml` | GitHub Actions CI: check + test jobs |
+| `.github/workflows/ci.yml` | GitHub Actions CI: verify and security audit |

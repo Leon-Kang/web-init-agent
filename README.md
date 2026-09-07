@@ -31,8 +31,7 @@ for the full rule set.
 
 ```bash
 pnpm install      # install deps + set up git hooks / 安装依赖并初始化 Git 钩子
-pnpm run check    # format check + lint + typecheck / 格式检查 + 代码检查 + 类型检查
-pnpm run test     # run tests / 运行测试
+pnpm run verify   # check + build + real tests / 检查 + 构建 + 真实测试
 ```
 
 ### New project from this template / 从模板创建新项目
@@ -82,7 +81,7 @@ Edit `tsconfig.json` with framework-specific overrides.
 |---|---|---|
 | Next.js | `"jsx": "preserve"` | add `"next/core-web-vitals"` |
 | Astro | keep `"jsx": "react-jsx"` | `"astro/tsconfigs/strict"` |
-| Vite + React | base works as-is / 无需修改 | — |
+| Vite + React | add `"jsx": "react-jsx"` | — |
 | Remix | `"moduleResolution": "bundler"` | add Remix types |
 
 Update `"include"` to match your source layout:
@@ -108,10 +107,13 @@ pnpm dlx dprint config update
 ### Step 5 · 搭建测试环境
 
 **Browser project (React, Next.js, Astro) / 浏览器项目：**
-`vitest.config.ts` is already set to `environment: "jsdom"` — no change needed.
-`vitest.config.ts` 已设置 `environment: "jsdom"`，无需修改。
+Install `jsdom` and the framework testing libraries, then change `vitest.config.ts` to
+`environment: "jsdom"`.
+安装 `jsdom` 和框架测试库，然后把 `vitest.config.ts` 改为 `environment: "jsdom"`。
 
 **Server-only project / 纯服务端项目：**
+
+The starter already uses the Node.js environment. / starter 默认已经使用 Node.js 环境。
 
 ```ts
 // vitest.config.ts
@@ -156,6 +158,7 @@ Add new required variables (keys only, no values) to `.env.example`.
 
 ```bash
 pnpm run check    # must pass / 必须通过
+pnpm run build    # must compile / 必须完成构建
 pnpm run test     # must pass / 必须通过
 ```
 
@@ -181,10 +184,17 @@ pnpm run lint         # lint JS/TS / 检查 JS/TS
 pnpm run lint:css     # lint CSS / 检查 CSS
 pnpm run lint:fix     # auto-fix lint issues / 自动修复 lint 问题
 pnpm run typecheck    # type check / 类型检查
-pnpm run check        # all of the above / 以上全部
+pnpm run build        # compile the minimal example / 编译最小示例
+pnpm run check        # format + lint + typecheck / 格式 + 检查 + 类型检查
 pnpm run test         # run tests once / 运行测试（单次）
 pnpm run test:watch   # run tests in watch mode / 监听模式运行测试
+pnpm run verify       # check + build + test / 完整验收
 ```
+
+The checked-in `examples/minimal/` project is the acceptance fixture. Framework adoption may
+replace it only after equivalent production build and non-empty tests are wired into `verify`.
+
+模板版本记录在 `starter-version.json`；升级规则见 `docs/upgrading.md`。
 
 ---
 
@@ -234,10 +244,10 @@ fix(cart): prevent duplicate items
 |---|---|
 | `AGENTS.md` | Full rule set for AI agents / AI agent 完整规则 |
 | `package.json` | Dependencies, scripts, lint-staged / 依赖、脚本、提交钩子 |
-| `.npmrc` | pnpm config: exact versions, peer deps / pnpm 配置 |
+| `pnpm-workspace.yaml` | pnpm security, exact versions, peers, overrides / pnpm 安全与版本策略 |
 | `tsconfig.base.json` | Strict TypeScript base / 严格 TS 基础配置 |
 | `tsconfig.json` | Framework overrides (edit this) / 框架配置（在这里改） |
-| `vitest.config.ts` | Test runner config / 测试运行配置 |
+| `vitest.config.ts` | Framework-neutral Node test config / 框架无关 Node 测试配置 |
 | `biome.json` | JS/TS linter config / JS/TS 检查配置 |
 | `.dprint.jsonc` | Formatter config / 格式化配置 |
 | `.stylelintrc.js` | CSS linter config / CSS 检查配置 |
@@ -245,7 +255,8 @@ fix(cart): prevent duplicate items
 | `.editorconfig` | Editor defaults / 编辑器基础配置 |
 | `.env.example` | Required env vars template / 环境变量模板 |
 | `renovate.json` | Automated dependency updates / 依赖自动更新 |
-| `.github/workflows/ci.yml` | CI: check + test / CI 流水线 |
+| `.github/workflows/ci.yml` | CI: verify + security audit / CI 验收与安全审计 |
+| `examples/minimal/` | Real buildable and tested baseline / 可构建、可测试的最小示例 |
 | `.vscode/` | VS Code settings + recommended extensions / 编辑器配置 |
 
 ## License

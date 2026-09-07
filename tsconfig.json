@@ -7,6 +7,6 @@
     // Astro:    extend with "astro/tsconfigs/strict"
     // Remix:    add framework types to "types" array
   },
-  "include": ["src", "*.ts"],
+  "include": ["examples/minimal/src", "examples/minimal/tests", "*.ts"],
   "exclude": ["node_modules", "dist", "build", "out"]
 }
